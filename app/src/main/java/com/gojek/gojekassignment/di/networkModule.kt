@@ -3,6 +3,8 @@ package com.gojek.gojekassignment.di
 import android.content.Context
 import com.gojek.gojekassignment.core.network.ApiService
 import com.gojek.gojekassignment.core.network.CacheInterceptor
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -22,7 +24,8 @@ val networkModule = module {
     factory { provideCache(get()) }
     factory { provideOkHttpClient(get(), get()) }
     factory { CacheInterceptor(get()) }
-    single { provideRetrofit(get()) }
+    factory { provideMoshi() }
+    single { provideRetrofit(get(), get()) }
     factory { provideNetworkApi(get()) }
 }
 
@@ -46,10 +49,16 @@ fun provideOkHttpClient(
 
 }
 
-fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+fun provideMoshi(): Moshi {
+    return Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+}
+
+fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
     return Retrofit.Builder()
         .baseUrl("https://run.mocky.io/")
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .client(okHttpClient)
         .build()
