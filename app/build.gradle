@@ -9,6 +9,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId "com.gojek.gojekassignment"
         minSdkVersion 21
@@ -78,4 +82,7 @@ dependencies {
 
     // Timber - Logging library
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //Facebook Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }
