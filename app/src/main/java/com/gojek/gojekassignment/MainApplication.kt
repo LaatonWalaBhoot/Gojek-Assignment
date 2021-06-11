@@ -1,6 +1,7 @@
 package com.gojek.gojekassignment
 
 import android.app.Application
+import com.gojek.gojekassignment.di.networkModule
 import com.gojek.gojekassignment.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,7 +20,8 @@ class MainApplication : Application() {
             androidContext(this@MainApplication)
             modules(
                 listOf(
-                    viewModelModule
+                    viewModelModule,
+                    networkModule
                 )
             )
         }
