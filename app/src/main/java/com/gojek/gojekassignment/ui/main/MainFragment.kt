@@ -2,6 +2,7 @@ package com.gojek.gojekassignment.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -25,6 +26,12 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding?.loadingViewContainer?.startShimmer()
+        mainViewModel.repositories.observe(viewLifecycleOwner, Observer {
+            binding?.loadingViewContainer?.stopShimmer()
+            binding?.loadingViewContainer?.visibility = View.GONE
+
+        })
     }
 
     override fun onDestroyView() {
