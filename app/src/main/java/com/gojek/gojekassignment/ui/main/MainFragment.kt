@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.gojek.gojekassignment.databinding.MainFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class MainFragment : Fragment() {
 

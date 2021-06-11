@@ -32,15 +32,14 @@ class CacheInterceptor(private val context: Context) : Interceptor {
             request.newBuilder().build()
         } else
         /*
-        *  If there is no Internet, get the cache that was stored 7 days ago.
-        *  If the cache is older than 7 days, then discard it,
-        *  and indicate an error in fetching the response.
+        *  If there is no Internet, get the cache that was stored 2 hours ago.
+        *  If the cache is older than 2 hours, then discard it.
         *  The 'max-stale' attribute is responsible for this behavior.
         *  The 'only-if-cached' attribute indicates to not retrieve new data; fetch the cache only instead.
         */
             request.newBuilder().header(
                 "Cache-Control",
-                "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
+                "public, only-if-cached, max-stale=" + 60 * 60 * 2
             ).build()
 
         return chain.proceed(request)
